@@ -6,6 +6,7 @@
 #include "Runtime/NavigationSystem/Public/NavigationSystem.h"
 #include "AIController.h"
 #include "Kismet/GameplayStatics.h"
+#include "GameFramework/PlayerController.h"
 
 UBTT_MoveToGroupLocation::UBTT_MoveToGroupLocation(FObjectInitializer const& a_pObjectInit)
 {
@@ -27,6 +28,10 @@ EBTNodeResult::Type UBTT_MoveToGroupLocation::ExecuteTask(UBehaviorTreeComponent
 
 		// Tell the AI to move towards target location
 		a_pTreeComp.GetAIOwner()->MoveToLocation(pLocation);
+
+		// Match the player controller's rotation
+		FRotator pRotation = UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetPawn()->GetActorRotation();
+		a_pTreeComp.GetAIOwner()->GetPawn()->SetActorRotation(pRotation);
 	}
 
 	// Finish execution
