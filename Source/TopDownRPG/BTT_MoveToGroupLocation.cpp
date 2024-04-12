@@ -31,7 +31,8 @@ EBTNodeResult::Type UBTT_MoveToGroupLocation::ExecuteTask(UBehaviorTreeComponent
 
 		// Match the player controller's rotation
 		FRotator pRotation = UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetPawn()->GetActorRotation();
-		a_pTreeComp.GetAIOwner()->GetPawn()->SetActorRotation(pRotation);
+		FRotator pSlerpRot = FQuat::Slerp(a_pTreeComp.GetAIOwner()->GetPawn()->GetActorQuat(), pRotation.Quaternion(), LookRotationRate).Rotator();
+		a_pTreeComp.GetAIOwner()->GetPawn()->SetActorRotation(pSlerpRot);
 	}
 
 	// Finish execution
