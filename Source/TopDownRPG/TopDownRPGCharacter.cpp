@@ -51,6 +51,62 @@ ATopDownRPGCharacter::ATopDownRPGCharacter()
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
 
+void ATopDownRPGCharacter::AddCharacterToGroup(AActor* Character)
+{
+	// Add character to array if valid
+	if (Character)
+		Characters.AddUnique(Character);
+	
+	// Calculate group locations
+	CalculateGroupLocations();
+}
+
+void ATopDownRPGCharacter::RemoveCharacterFromGroup(AActor* Character)
+{
+	// Remove the specified character
+	Characters.Remove(Character);
+
+	// Calculate group locations
+	CalculateGroupLocations();
+}
+
+void ATopDownRPGCharacter::CalculateGroupLocations()
+{
+	// Get size of character group
+	int NumCharacters = Characters.Num();
+
+	// Evenly calculate points based on group size
+	TArray<FVector> newLocations;
+	float theta = 0;
+	float delta = static_cast<float>(2.0 * PI / static_cast<float>(NumCharacters));
+	for (int i = 0; i < NumCharacters; i++)
+	{
+		FVector relativeLoc = FVector(cos(theta) * GroupRadius, sin(theta) * GroupRadius, 0.0f);
+		theta += delta;
+		newLocations.AddUnique(GetActorLocation() + relativeLoc);
+	}
+
+	// Set the new location array
+	GroupLocations = newLocations;
+}
+
+int ATopDownRPGCharacter::GetCharacterIndex(AActor* Character)
+{
+	// First get if the input character is contained within the group
+	if(Characters.Contains(Character))
+	{
+		// Search for character's index
+		for (int i = 0; i < Characters.Num(); i++)
+		{
+			if (Characters[i] == Character)
+				return i;
+		}
+	}
+
+	// If character isnt contained, return a -1
+	return -1;
+}
+
 void ATopDownRPGCharacter::BeginPlay()
 {
 	// Call the base class  
@@ -108,6 +164,9 @@ void ATopDownRPGCharacter::Move(const FInputActionValue& Value)
 		// add movement 
 		AddMovementInput(ForwardDirection, MovementVector.Y);
 		AddMovementInput(RightDirection, MovementVector.X);
+
+		// Recalculate group locations as player moves
+		CalculateGroupLocations();
 	}
 }
 
