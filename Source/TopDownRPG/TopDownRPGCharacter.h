@@ -38,7 +38,36 @@ class ATopDownRPGCharacter : public ACharacter
 	class UInputAction* LookAction;
 
 public:
+
+	// Array of characters to group
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<AActor*> Characters;
+
+	// Array of points for members to follow
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<FVector> GroupLocations;
+
+	// Radius from center of group
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float GroupRadius = 200.0f;
+
+	// Constructor
 	ATopDownRPGCharacter();
+
+	// Method for adding characters to group
+	UFUNCTION(BlueprintCallable)
+	void AddCharacterToGroup(AActor* Character);
+
+	// Method for removing characters from group
+	UFUNCTION(BlueprintCallable)
+	void RemoveCharacterFromGroup(AActor* Character);
+
+	// Method for calculating locations for each member
+	// of the group to move to
+	void CalculateGroupLocations();
+
+	// Getter for group character index
+	int GetCharacterIndex(AActor* Character);
 	
 
 protected:
