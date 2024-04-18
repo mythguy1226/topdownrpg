@@ -30,7 +30,8 @@ EBTNodeResult::Type UBTT_FindMemberLocation::ExecuteTask(UBehaviorTreeComponent&
 		AActor* pMember = Cast<AActor>(pBlackboard->GetValueAsObject(MemberBlackboardKey.SelectedKeyName));
 
 		// Setting target location to member location
-		pBlackboard->SetValueAsVector(GetSelectedBlackboardKey(), pMember->GetActorLocation());
+		if(pMember)
+			pBlackboard->SetValueAsVector(GetSelectedBlackboardKey(), pMember->GetActorLocation());
 	}
 
 	// Finish execution

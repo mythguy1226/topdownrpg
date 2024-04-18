@@ -16,7 +16,4 @@ class TOPDOWNRPG_API UBTT_MoveToGroupLocation : public UBTTask_BlackboardBase
 public:
 	UBTT_MoveToGroupLocation(FObjectInitializer const& a_pObjectInit);
 	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& a_pTreeComp, uint8* a_pNodeMem);
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	float LookRotationRate = 0.25f;
 };

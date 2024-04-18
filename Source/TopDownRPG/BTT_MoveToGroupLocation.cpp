@@ -28,11 +28,6 @@ EBTNodeResult::Type UBTT_MoveToGroupLocation::ExecuteTask(UBehaviorTreeComponent
 
 		// Tell the AI to move towards target location
 		a_pTreeComp.GetAIOwner()->MoveToLocation(pLocation);
-
-		// Match the player controller's rotation
-		FRotator pRotation = UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetPawn()->GetActorRotation();
-		FRotator pSlerpRot = FQuat::Slerp(a_pTreeComp.GetAIOwner()->GetPawn()->GetActorQuat(), pRotation.Quaternion(), LookRotationRate).Rotator();
-		a_pTreeComp.GetAIOwner()->GetPawn()->SetActorRotation(pSlerpRot);
 	}
 
 	// Finish execution
