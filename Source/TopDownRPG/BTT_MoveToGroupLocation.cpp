@@ -7,6 +7,8 @@
 #include "AIController.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerController.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/Character.h"
 
 UBTT_MoveToGroupLocation::UBTT_MoveToGroupLocation(FObjectInitializer const& a_pObjectInit)
 {
