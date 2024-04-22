@@ -1,0 +1,23 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
+#include "BTT_FindMemberLocation.generated.h"
+
+/**
+ * 
+ */
+UCLASS()
+class TOPDOWNRPG_API UBTT_FindMemberLocation : public UBTTask_BlackboardBase
+{
+	GENERATED_BODY()
+public:
+	UBTT_FindMemberLocation(FObjectInitializer const& a_pObjectInit);
+	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& a_pTreeComp, uint8* a_pNodeMem);
+
+	// Blackboard key selector for group member reference
+	UPROPERTY(EditAnywhere, Category = Blackboard)
+	struct FBlackboardKeySelector MemberBlackboardKey;
+};
