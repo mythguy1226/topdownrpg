@@ -19,7 +19,9 @@ public class TopDownRPG : ModuleRules
             "AIModule",
             "NavigationSystem",
             "GameplayTasks",
-            "UMG"
+            "UMG",
+            "Json", 
+			"JsonUtilities"
         });
 	}
 }
